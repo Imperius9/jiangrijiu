@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.UserMapper">
+    <select id="select" resultType="object.pojo.User" parameterType="java.util.Map">
+        SELECT *
+        FROM user
+        <where>
+            <if test="email != null">
+                and email = #{email ,jdbcType = VARCHAR}
+            </if>
+            <if test="number != null">
+                and phonenumber = #{number ,jdbcType = VARCHAR}
+            </if>
+            <if test="username != null">
+                and username = #{username ,jdbcType = VARCHAR}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="java.util.Map">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="Id != null">
+                Id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="passwords != null">
+                passwords,
+            </if>
+            <if test="power != null">
+                power,
+            </if>
+            <if test="createTime != null">
+                createtime,
+            </if>
+            <if test="lastloginTime != null">
+                lastlogintime,
+            </if>
+            <if test="lastloginIp != null">
+                lastloginip,
+            </if>
+            <if test="lastloginAddress != null">
+                lastloginaddress,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="onlines != null">
+                onlines,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="idCard != null">
+                idcard,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="number != null">
+                phonenumber,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="passwords != null">
+                #{passwords,jdbcType=VARCHAR},
+            </if>
+            <if test="onlines != null">
+                #{onlines,jdbcType=VARCHAR},
+            </if>
+            <if test="power != null">
+                #{power,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLogintime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginIp != null">
+                #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginAddress != null">
+                #{lastLoginaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null">
+                #{idcard,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="java.util.Map">
+        UPDATE user
+        <set>
+            <if test="username != null">
+                username = #{username ,jdbcType = VARCHAR},
+            </if>
+            <if test="passwords != null">
+                passwords = #{passwords ,jdbcType = VARCHAR},
+            </if>
+            <if test="power != null">
+                power = #{power ,jdbcType = VARCHAR},
+            </if>
+            <if test="createTime != null">
+                createtime = #{createTime ,jdbcType = VARCHAR},
+            </if>
+            <if test="lastloginTime != null">
+                lastlogintime = #{lastloginTime ,jdbcType = VARCHAR},
+            </if>
+            <if test="lastloginIp != null">
+                lastloginip = #{lastloginIp ,jdbcType = VARCHAR},
+            </if>
+            <if test="lastloginAddress != null">
+                lastloginaddress = #{lastloginAddress ,jdbcType = VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday ,jdbcType = VARCHAR},
+            </if>
+            <if test="onlines != null">
+                onlines = #{onlines ,jdbcType = VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email ,jdbcType = VARCHAR},
+            </if>
+            <if test="idCard != null">
+                idcard = #{idCard ,jdbcType = VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address ,jdbcType = VARCHAR},
+            </if>
+            <if test="number != null">
+                phonenumber = #{number ,jdbcType = VARCHAR},
+            </if>
+        </set>
+        <where>
+            <if test="wEmail != null">
+                and email = #{wEmail ,jdbcType = VARCHAR}
+            </if>
+            <if test="wNumber != null">
+                and phonenumber = #{wNumber ,jdbcType = VARCHAR}
+            </if>
+            <if test="wUsername != null">
+                and username = #{wUsername ,jdbcType = VARCHAR}
+            </if>
+            <if test="id != null">
+                and id= #{id ,jdbcType = INTEGER}
+            </if>
+        </where>
+    </update>
+</mapper>

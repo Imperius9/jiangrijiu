@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--自动扫描-->
+    <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="tool"/>
+    <context:component-scan base-package="service"/>
+    <context:component-scan base-package="mapper"/>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!--让@RequestBody注解自动转换json-->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/xml;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <!--<property name="userMapper" ref="customObjectMapper"></property>-->
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 4.处理静态资源的请求 ,没有<resource/>元素就不需要 -->
+    <mvc:default-servlet-handler/>
+    <mvc:resources mapping="/jsLib/" location="/jsLib/**"/>
+    <mvc:resources mapping="/jsp/" location="/jsp/**"/>
+    <mvc:resources mapping="/css/" location="/css/**"/>
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <!--&lt;!&ndash;文件上传配置&ndash;&gt;-->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+       <!--&lt;!&ndash;默认编码&ndash;&gt;-->
+        <!--<property name="defaultEncoding" value="UTF-8"/>-->
+       <!--&lt;!&ndash;上传文件大小限制为31M,31*1.24*1.24&ndash;&gt;-->
+        <!--<property name="maxUploadSize" value="32505856"/>-->
+        <!--&lt;!&ndash;内存中的最大值&ndash;&gt;-->
+        <!--<property name="maxInMemorySize" value="4096"/>-->
+    <!--</bean>-->
+
+</beans>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--获取数据库配置文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--设置数据源c3p0-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--初始化连接大小-->
+        <property name="initialPoolSize" value="${initialPoolSize}"/>
+        <!--连接池最大数量-->
+        <property name="maxPoolSize" value="${maxPoolSize}"/>
+        <!--连接池最小空闲-->
+        <property name="minPoolSize" value="${minPoolSize}"/>
+    </bean>
+
+    <!--sqlSessionFactory bean-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mybatisMapper/*Mapper.xml" />
+    </bean>
+
+    <!--自动扫描mapper接口，并注入sqlSession-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="mapper"/>
+    </bean>
+
+
+</beans>
