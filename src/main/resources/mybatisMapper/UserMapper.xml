@@ -165,4 +165,15 @@
             </if>
         </where>
     </update>
+    <select id="selectAgentInfoByUserId" parameterType="java.lang.String" resultType="object.pojo.Info">
+        SELECT info.*
+        FROM info, user, agent
+        WHERE user.Id = #{"Id",jdbcType=INTEGER} AND user.Id = agent.agentuserid AND info.Id = agent.agentinfoid
+    </select>
+    <select id="selectReleaseInfoByUserId" parameterType="java.lang.String" resultType="object.pojo.Info">
+        SELECT info.*
+        FROM info, user, `release`
+        WHERE user.Id = #{"Id",jdbcType=INTEGER} AND user.Id = `release`.releaseuserid AND
+              info.Id = `release`.releaseinfoid
+    </select>
 </mapper>

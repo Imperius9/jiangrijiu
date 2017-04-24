@@ -1,5 +1,6 @@
 package mapper;
 
+import object.pojo.Info;
 import object.pojo.User;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,6 @@ public interface UserMapper {
     List<User> select(Map<String, Object> params);
     int insert(Map<String, Object> params);
     int update(Map<String, Object> params);
+    List<Info> selectAgentInfoByUserId(String params);
+    List<Info> selectReleaseInfoByUserId(String params);
 }

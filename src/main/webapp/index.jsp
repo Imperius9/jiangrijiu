@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <title>代课网</title>
     <!-- jQuery文件，在bootstrap.min.js之前引入 -->
     <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
@@ -19,6 +20,11 @@
         body {
             padding-top: 50px;
             padding-bottom: 50px;
+        }
+
+        .myTableCSS {
+            height: 300px;
+            overflow-y: auto;
         }
 
         .myFrame {
@@ -49,9 +55,9 @@
         }
     </script>
     <script>
-//        $(document).ready(function () {
-//
-//        })
+        $(document).ready(function () {
+
+        })
     </script>
 </head>
 <body>
@@ -80,96 +86,71 @@
 </nav>
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 myTableCSS">
             <h3>我的代理</h3>
-            <hr>
             <table class="table">
                 <thead>
                 <tr>
-                    <th>编号</th>
-                    <th>产品</th>
-                    <th>交付时间</th>
+                    <th>时间</th>
+                    <th>地点</th>
+                    <th>联系方式</th>
                     <th>状态</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>TB - Monthly</td>
-                    <td>01/04/2012</td>
-                    <td>Default</td>
-                </tr>
-                <tr class="success">
-                    <td>1</td>
-                    <td>TB - Monthly</td>
-                    <td>01/04/2012</td>
-                    <td>Approved</td>
-                </tr>
-                <tr class="error">
-                    <td>2</td>
-                    <td>TB - Monthly</td>
-                    <td>02/04/2012</td>
-                    <td>Declined</td>
-                </tr>
-                <tr class="warning">
-                    <td>3</td>
-                    <td>TB - Monthly</td>
-                    <td>03/04/2012</td>
-                    <td>Pending</td>
-                </tr>
-                <tr class="info">
-                    <td>4</td>
-                    <td>TB - Monthly</td>
-                    <td>04/04/2012</td>
-                    <td>Call in to confirm</td>
-                </tr>
-                </tbody>
+                <c:if test="${!empty userAgentAndRelease}">
+                    <c:forEach items="${userAgentAndRelease.agent}" var="Info">
+                        <tr>
+                            <td>第${Info.week}周&nbsp;周${Info.weekday}&nbsp;${Info.unit}单元</td>
+                            <td>${Info.build}号楼${Info.roomOf}</td>
+                            <td>${Info.contact}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${Info.conditionA=='1'}">
+                                        已接受
+                                    </c:when>
+                                    <c:when test="${Info.conditionA=='2'}">
+                                        被拒绝
+                                    </c:when>
+                                    <c:otherwise>
+                                        等待回复
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
             </table>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 myTableCSS">
             <h3>我的发布</h3>
-            <hr>
             <table class="table">
                 <thead>
                 <tr>
-                    <th>编号</th>
-                    <th>产品</th>
-                    <th>交付时间</th>
+                    <th>时间</th>
+                    <th>地点</th>
+                    <th>联系方式</th>
                     <th>状态</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>TB - Monthly</td>
-                    <td>01/04/2012</td>
-                    <td>Default</td>
-                </tr>
-                <tr class="success">
-                    <td>1</td>
-                    <td>TB - Monthly</td>
-                    <td>01/04/2012</td>
-                    <td>Approved</td>
-                </tr>
-                <tr class="error">
-                    <td>2</td>
-                    <td>TB - Monthly</td>
-                    <td>02/04/2012</td>
-                    <td>Declined</td>
-                </tr>
-                <tr class="warning">
-                    <td>3</td>
-                    <td>TB - Monthly</td>
-                    <td>03/04/2012</td>
-                    <td>Pending</td>
-                </tr>
-                <tr class="info">
-                    <td>4</td>
-                    <td>TB - Monthly</td>
-                    <td>04/04/2012</td>
-                    <td>Call in to confirm</td>
-                </tr>
-                </tbody>
+                <c:if test="${!empty userAgentAndRelease}">
+                    <c:forEach items="${userAgentAndRelease.release}" var="Info">
+                        <tr>
+                            <td>第${Info.week}周&nbsp;周${Info.weekday}&nbsp;${Info.unit}单元</td>
+                            <td>${Info.build}号楼${Info.roomOf}</td>
+                            <td>${Info.contact}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${Info.conditionB=='1'}">
+                                        有请求
+                                    </c:when>
+                                    <c:otherwise>
+                                        寻找中
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
             </table>
         </div>
     </div>

@@ -105,7 +105,7 @@
                         <input type="checkbox" value="remember-me" id="rememberMe">记住我
                     </label>
                 </div>
-                <button class="btn btn-primary btn-block"  type="submit">登录</button>
+                <button class="btn btn-primary btn-block" type="submit">登录</button>
                 <button class="btn btn-default btn-block" type="button"
                         onclick="location.href='${pageContext.request.contextPath}/jsp/userRegister.jsp'">注册
                 </button>

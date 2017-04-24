@@ -1,6 +1,8 @@
 package service.Impl;
 
 import mapper.UserMapper;
+import object.dto.UserAgentAndRelease;
+import object.pojo.Info;
 import object.pojo.User;
 import org.springframework.stereotype.Service;
 import service.UserService;
@@ -35,4 +37,14 @@ public class UserServiceImpl implements UserService {
         return insertId > 0;//判断返回的改变行数值是否大于0，判断成功与否
     }
 
+    //
+    public UserAgentAndRelease selectUserAgentAndRelease(String params) {
+        UserAgentAndRelease userAgentAndRelease = new UserAgentAndRelease();
+        List<Info> agentList = userMapper.selectAgentInfoByUserId(params);//通过用户id查询此用户的代理信息
+        List<Info> releaseList = userMapper.selectReleaseInfoByUserId(params);//通过用户id查询用户的发布信息
+        //将上述返回结果统一到一个对象中进行返回
+        userAgentAndRelease.setAgent(agentList);
+        userAgentAndRelease.setRelease(releaseList);
+        return userAgentAndRelease;
+    }
 }

@@ -1,5 +1,6 @@
 package service;
 
+import object.dto.UserAgentAndRelease;
 import object.pojo.User;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface UserService {
     List<User> select(Map<String, Object> params);
     boolean insert(Map<String,Object> params);
     boolean update(Map<String, Object> params);
+    UserAgentAndRelease selectUserAgentAndRelease(String params);
 }

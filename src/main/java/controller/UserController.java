@@ -1,6 +1,7 @@
 package controller;
 
 import object.dto.NumberAndCode;
+import object.dto.UserAgentAndRelease;
 import object.dto.UserLogin;
 import object.pojo.User;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import service.UserService;
 import tool.DateEditor;
 import tool.StringTool;
@@ -31,7 +33,7 @@ public class UserController extends DateEditor {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     //用户登录控制器
-    public User userLogin(UserLogin userLogin) {
+    public ModelAndView userLogin(UserLogin userLogin) {
         Map<String, Object> params = new HashMap<String, Object>();
         //判断用户的登录方式
         if (userLogin.getUserLoginName() != null) {
@@ -42,14 +44,23 @@ public class UserController extends DateEditor {
             } else {
                 params.put("username", userLogin.getUserLoginName());
             }
-
+            //查询用户信息
             List<User> users = userService.select(params);
-
-            if (null != users) {
-                return users.get(0);//返回modelandview
-            }
-        }
-        return null;
+            //判断密码正确性
+            if (users.get(0).getPasswords().equals(userLogin.getPassword())) {
+                String userId;
+                ModelAndView modelAndView = new ModelAndView();
+                //将Id属性从用户信息中单独取出
+                userId = users.get(0).getId();
+                //通过id查询用户的代理与发布
+                UserAgentAndRelease userAgentAndRelease = userService.selectUserAgentAndRelease(userId);
+                //将用户信息放入返回的model中
+                userAgentAndRelease.setUser(users.get(0));
+                modelAndView.setViewName("/index");
+                modelAndView.addObject("userAgentAndRelease", userAgentAndRelease);
+                return modelAndView;
+            } else return null;
+        } else return null;
     }
 
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
@@ -78,7 +89,8 @@ public class UserController extends DateEditor {
     @ResponseBody
     //通过电话号码完成用户注册
     public String settingPasswordByPhone(String password, String msg, HttpServletRequest request) {
-        String number = request.getParameter("number");//从前端传回的url中读取用户注册用电话号码
+        //从前端传回的url中读取用户注册用电话号码
+        String number = request.getParameter("number");
         //判断用户操作为注册还是找回
         if (msg.equals("0")) {
             Map<String, Object> params = new HashMap<String, Object>();
