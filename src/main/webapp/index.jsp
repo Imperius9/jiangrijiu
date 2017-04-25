@@ -56,7 +56,20 @@
     </script>
     <script>
         $(document).ready(function () {
-
+            if (${!empty userAgentAndRelease.user}) {
+                $(".nav.navbar-nav.navbar-right").html("<li class='dropdown'>" +
+                    "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>${userAgentAndRelease.user.username} <span class='caret'></span></a>" +
+                    "<ul class='dropdown-menu'>" +
+                    "<li><a href=''>个人信息</a></li>" +
+                    "<li><a href=''>我的发布</a></li>" +
+                    "<li><a href=''>我的代理</a></li>" +
+                    "<li role='separator' class='divider'></li>" +
+                    "<li><a href=''>注销</a></li>" +
+                    "</ul>" +
+                    "</li>");
+            } else {
+                $(".nav.navbar-nav.navbar-right").html("<li><a href='${pageContext.request.contextPath}/jsp/userLogIn.jsp'>登录</a></li>");
+            }
         })
     </script>
 </head>
@@ -78,8 +91,8 @@
                 <li><a href="#">查找</a></li>
                 <li><a href="#">发布</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right"><%--导航栏右侧--%>
-                <li><a href="${pageContext.request.contextPath}/jsp/userLogIn.jsp">登录</a></li>
+            <ul class="nav navbar-nav navbar-right">
+                <%--导航栏右侧 通过类选择器动态展示用户状态--%>
             </ul>
         </div>
     </div>
@@ -87,7 +100,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 myTableCSS">
-            <h3>我的代理</h3>
+            <h3><a href="#">我的代理</a></h3>
             <table class="table">
                 <thead>
                 <tr>
@@ -122,7 +135,7 @@
             </table>
         </div>
         <div class="col-md-6 myTableCSS">
-            <h3>我的发布</h3>
+            <h3><a href="#">我的发布</a></h3>
             <table class="table">
                 <thead>
                 <tr>
